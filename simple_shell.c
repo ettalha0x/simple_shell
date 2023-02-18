@@ -1,16 +1,11 @@
-#include <unistd.h>
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/wait.h>
+#include "simple_shell.h"
 
 #define BUFFER_SIZE 1024
 
 int	main()
 {
 	char	**envp;
+	char	**cmd;
 	char	*line = NULL;
 	char	*args[2];
 	size_t	line_size = 0;
@@ -39,10 +34,12 @@ int	main()
 		else if (pid == 0)
 		{
 			// Child process
-			args[0] = line;
-			args[1] = NULL;
+			cmd = ft_split(line, ' ');
+			args[0] = cmd[0];
+			args[1] = NULL; //cmd[1]; trying to handle command lines with arguments
 			//this is just for test
-			//printf("line = %s\nline size = %lu\n", line, line_size);
+			// printf("line =%s\nline size = %lu\n", line, line_size);
+			// printf("cmd[0] =%s\ncmd[1] = %s\n\n", cmd[0], cmd[1]);
 			execve(args[0], args, envp);
 			// execve only returns if an error occurs
 			perror("Error");
