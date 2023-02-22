@@ -21,7 +21,7 @@ int main(int ac, char **av, char *envp[])
 	while (1)
 	{
 		free_buffers(cmd);
-		free_buffers(paths);
+		//free_buffers(paths);
 		free(cmd_path);
 		prompt_user();
 		line_size = getline(&line, &buff_size, stdin);
