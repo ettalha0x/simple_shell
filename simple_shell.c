@@ -10,10 +10,10 @@
 
 int main(int ac, char **av, char *envp[])
 {
-	char *line = NULL, *cmd_path = NULL; /* *path = NULL; */
+	char *line = NULL, *cmd_path = NULL, *path = NULL;
 	size_t buff_size = 0;
 	ssize_t line_size = 0;
-	char **cmd = NULL; //**paths = NULL;
+	char **cmd = NULL, **paths = NULL;
 	(void)envp, (void)av;
 	if (ac < 1)
 		return (-1);
@@ -21,7 +21,7 @@ int main(int ac, char **av, char *envp[])
 	while (1)
 	{
 		free_buffers(cmd);
-		//free_buffers(paths);
+		free_buffers(paths);
 		free(cmd_path);
 		prompt_user();
 		line_size = getline(&line, &buff_size, stdin);
@@ -35,9 +35,9 @@ int main(int ac, char **av, char *envp[])
 			continue;
 		if (checker(cmd, line))
 			continue;
-		//path = find_path();
-		//paths = tokenizer(path);
-		cmd_path = cmd[0];
+		path = find_path();
+		paths = tokenizer(path);
+		cmd_path = test_path(paths, cmd[0]);
 		if (!cmd_path)
 			perror(av[0]);
 		else
