@@ -13,7 +13,7 @@ int main(int ac, char **av, char *envp[])
 	char *line = NULL, *cmd_path = NULL; /* *path = NULL; */
 	size_t buff_size = 0;
 	ssize_t line_size = 0;
-	char **cmd = NULL, **paths = NULL;
+	char **cmd = NULL; //**paths = NULL;
 	(void)envp, (void)av;
 	if (ac < 1)
 		return (-1);
