@@ -35,12 +35,12 @@ int main(int ac, char **av, char *envp[])
 			continue;
 		if (checker(cmd, line))
 			continue;
-		path = find_path();
-		paths = tokenizer(path);
-		cmd_path = test_path(paths, cmd[0]);
-		if (!cmd_path)
-			perror(av[0]);
-		else
+		//path = find_path();
+		//paths = tokenizer(path);
+		//cmd_path = test_path(paths, cmd[0]);
+		// if (!cmd_path)
+		// 	perror(av[0]);
+		// else
 			execute(cmd_path, cmd);
 	}
 	if (line_size < 0 && flags.interactive)
