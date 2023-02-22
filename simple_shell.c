@@ -10,19 +10,19 @@
 
 int main(int ac, char **av, char *envp[])
 {
-	char *line = NULL, *pathcommand = NULL, *path = NULL;
+	char *line = NULL, *cmd_path = NULL, *path = NULL;
 	size_t buff_size = 0;
 	ssize_t line_size = 0;
-	char **command = NULL, **paths = NULL;
+	char **cmd = NULL, **paths = NULL;
 	(void)envp, (void)av;
 	if (ac < 1)
 		return (-1);
 	signal(SIGINT, handle_signal);
 	while (1)
 	{
-		free_buffers(command);
+		free_buffers(cmd);
 		free_buffers(paths);
-		free(pathcommand);
+		free(cmd_path);
 		prompt_user();
 		line_size = getline(&line, &buff_size, stdin);
 		if (line_size < 0)
@@ -30,18 +30,18 @@ int main(int ac, char **av, char *envp[])
 		info.ln_count++;
 		if (line[line_size - 1] == '\n')
 			line[line_size - 1] = '\0';
-		command = tokenizer(line);
-		if (command == NULL || *command == NULL || **command == '\0')
+		cmd = tokenizer(line);
+		if (cmd == NULL || *cmd == NULL || **cmd == '\0')
 			continue;
-		if (checker(command, line))
+		if (checker(cmd, line))
 			continue;
 		path = find_path();
 		paths = tokenizer(path);
-		pathcommand = test_path(paths, command[0]);
-		if (!pathcommand)
+		cmd_path = test_path(paths, cmd[0]);
+		if (!cmd_path)
 			perror(av[0]);
 		else
-			execution(pathcommand, command);
+			execute(cmd_path, cmd);
 	}
 	if (line_size < 0 && flags.interactive)
 		write(STDERR_FILENO, "\n", 1);
